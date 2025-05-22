@@ -11,26 +11,22 @@ def load_ip_set(file_path):
     with open(file_path, 'r') as f:
         return set(line.strip() for line in f if line.strip())
 
-ip_set = load_ip_set("/root/lzh/Total/result/less500.txt")  #超过阈值响应回退至500字节
+ip_set = load_ip_set(" ")
 
-ip_set2 = load_ip_set("/root/lzh/Total/data/4500.txt")  # 参与计算的IP
+ip_set2 = load_ip_set(" ")
 
 
 
 def read_txt_file_with_header(file_path):
-    """
-    逐行读取 TXT 文件，跳过第一行（表头），并将每行数据存储为字典，便于通过表头访问。
-    :param file_path: TXT 文件路径
-    """
     global dict_ans
     with open(file_path, 'r') as file:
-        # 读取并处理表头
+
         header = file.readline().strip().split()
 
-        # 逐行读取后续数据并存储为字典
+
         for line in file:
-            data = line.strip().split()  # 按空格分隔每行数据
-            row_dict = {header[i]: data[i] for i in range(len(header))}  # 创建字典，将表头和数据一一对应
+            data = line.strip().split()
+            row_dict = {header[i]: data[i] for i in range(len(header))}
             ip=row_dict['IP']
             if ip not in ip_set2:
                 continue
@@ -144,24 +140,24 @@ def read_txt_file_with_header(file_path):
 
 
 def save_dict_to_txt_and_excel(dict_ans, txt_file_path, excel_file_path):
-    # 保存到 TXT 文件
+
     with open(txt_file_path, 'w') as txt_file:
         for key, value_list in dict_ans.items():
-            # 将列表中的元素按空格连接成字符串
+
             value_str = ' '.join(map(str, value_list))
-            # 将键和值写入TXT文件
+
             txt_file.write(f"{key} {value_str}\n")
 
 
 
-file_path = "/root/lzh/tmp.txt"  
+file_path = " "
 read_txt_file_with_header(file_path)
 
-# 输出文件路径
-txt_file_path = " "  # 输出文件格式csv
-excel_file_path = " "  # 输出文件格式csv
 
-# 调用函数保存到文件
+txt_file_path = " "
+excel_file_path = " "
+
+
 save_dict_to_txt_and_excel(dict_ans, txt_file_path, excel_file_path)
 
-print(f"数据已保存到 {txt_file_path} 和 {excel_file_path}")
+
